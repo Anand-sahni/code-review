@@ -9,11 +9,11 @@ permissions:
 
 jobs:
   code_review:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v4.1.1
-      with:
-        fetch-depth: 0
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
     
     - uses: GrantBirki/git-diff-action@v2.4.0
       id: git-diff
