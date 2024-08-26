@@ -35,11 +35,13 @@ jobs:
           response=$(curl -s https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${{ secrets.GEMINI_KEY}} \
             -H "Content-Type: application/json" \
             -d "{
-              \"messages\": [
-                { \"role\": \"system\", \"content\": \"${{ vars.CODE_REVIEW_PROMPT }}\" },
-                { \"role\": \"user\", \"content\": $escaped_code }
-              ]
-            }")
+              \"prompt\": {
+                \"messages\": [
+                  { \"role\": \"system\", \"content\": \"${{ vars.CODE_REVIEW_PROMPT }}\" },
+                  { \"role\": \"user\", \"content\": \"$escaped_code\" }
+                ]
+              }
+           }")
           
           echo "This is the response $response"
           
