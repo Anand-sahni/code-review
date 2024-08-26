@@ -30,18 +30,20 @@ jobs:
           echo "PR Changes $changed_code"
           
           # Escape newlines and double quotes in the changed_code
-          escaped_code=$(echo "$changed_code" | jq -s -R -r @json)
-          
-          response=$(curl -s https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${{ secrets.GEMINI_KEY}} \
+          original_code='diff --git a/index.js b/index.js\nindex 83d4fcd..2dbd9e8 100644\n--- a/index.js\n+++ b/index.js\n@@ -1,5 +1,5 @@\n-console.log("Hello World");\n+console.log("Hello, Universe!");'
+          escaped_code=$(echo "$original_code" | jq -R .)
+
+          response=$(curl -s https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${{ secrets.GEMINI_KEY }} \
             -H "Content-Type: application/json" \
             -d "{
               \"prompt\": {
                 \"messages\": [
                   { \"role\": \"system\", \"content\": \"${{ vars.CODE_REVIEW_PROMPT }}\" },
-                  { \"role\": \"user\", \"content\": \"$escaped_code\" }
+                  { \"role\": \"user\", \"content\": $escaped_code }
                 ]
               }
-           }")
+            }")
+
           
           echo "This is the response $response"
           
