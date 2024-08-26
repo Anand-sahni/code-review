@@ -1,6 +1,8 @@
 // program to generate fibonacci series up to n terms
 
 // new comment line
+// new comment line
+
 
 // take input from the user
 const number = parseInt(prompt('Enter the number of terms: '));
